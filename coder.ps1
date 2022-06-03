@@ -12,16 +12,17 @@ $enc = [System.Text.Encoding]::UTF8
 if ($method -eq "encode") {
 	$infile_contents =  Get-Content $infile -Encoding Byte -ReadCount 0
 	$outfile_contents = [System.Convert]::ToBase64String($infile_contents)
+	Set-Content -Path $outfile -Value $outfile_contents
 } 
 
 if ($method -eq "decode"){
-	$infile_b64contents = Get-Content $infile -ReadCount 0
-	$infile_contents_bytes = [System.Convert]::FromBase64String($infile_b64contents)
-	$outfile_contents = $enc.GetString($infile_contents_bytes)
+	$infile_b64contents = Get-Content $infile -ReadCount 0 -Encoding UTF8
+	$outfile_contents = [System.Convert]::FromBase64String($infile_b64contents)
+	Set-Content -Path $outfile -Value $outfile_contents -Encoding Byte
 }
 
 if ($method -eq "rot") {
-	$infile_b64contents = Get-Content $infile -ReadCount 0
+	$infile_b64contents = Get-Content $infile -ReadCount 0 -Encoding UTF8
 	$infile_b64contents.ToCharArray() | ForEach-Object {
 		if((([int] $_ -ge 97) -and ([int] $_ -le 109)) -or (([int] $_ -ge 65) -and ([int] $_ -le 77)))
 		{
@@ -37,9 +38,5 @@ if ($method -eq "rot") {
 		}        
 	}
 	$outfile_contents = $string
+	Set-Content -Path $outfile -Value $outfile_contents
 }
-
-$outfile_contents | set-content -Path "$outfile"
-
-
-
