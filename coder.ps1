@@ -21,16 +21,42 @@ if ($method -eq "decode"){
 	Set-Content -Path $outfile -Value $outfile_contents -Encoding Byte
 }
 
-if ($method -eq "rot") {
+if ($method -eq "xor"){
+	$xor_operand = "$([char]0x0f)"
+	#$infile_contents =  Get-Content $infile -Encoding Byte -ReadCount 0
+	$infile_contents = [System.IO.File]::ReadAllBytes("$infile") 
+	$length = $infile_contents.Count
+	$xord_byte_array = New-Object Byte[] $length
+	for($i=0; $i -lt $length ; $i++)
+	{
+	    $xord_byte_array[$i] = $infile_contents[$i] -bxor $xor_operand
+	}
+	# Write the XORd bytes to the output file
+	[System.IO.File]::WriteAllBytes("$outfile", $xord_byte_array)
+}
+
+if ($method -eq "rot18") {
+	$n = 13
+	$m = 5
 	$infile_b64contents = Get-Content $infile -ReadCount 0 -Encoding UTF8
 	$infile_b64contents.ToCharArray() | ForEach-Object {
+		# a-m A-M
 		if((([int] $_ -ge 97) -and ([int] $_ -le 109)) -or (([int] $_ -ge 65) -and ([int] $_ -le 77)))
 		{
-			$string += [char] ([int] $_ + 13);
+			$string += [char] ([int] $_ + $n);
 		}
+		# n-z N-Z
 		elseif((([int] $_ -ge 110) -and ([int] $_ -le 122)) -or (([int] $_ -ge 78) -and ([int] $_ -le 90)))
 		{
-			$string += [char] ([int] $_ - 13);
+			$string += [char] ([int] $_ - $n);
+		}
+		elseif(([int] $_ -ge 48) -and ([int] $_ -le 52))
+		{
+			$string += [char] ([int] $_ + $m);
+		}
+		elseif(([int] $_ -ge 53) -and ([int] $_ -le 57))
+		{
+			$string += [char] ([int] $_ - $m);
 		}
 		else
 		{
