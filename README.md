@@ -46,6 +46,7 @@ binary: 0011 0101
 ```
 
 * https://en.wikipedia.org/wiki/Bitwise_operation#XOR_2
+* https://en.wikipedia.org/wiki/XOR_cipher
 
 ## Combining 
 
