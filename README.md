@@ -29,3 +29,15 @@ coder "rot18" "encodedfile" "rotated"
 coder "rot18" "rotated" "encodedfile"
 coder "decode" "encodedfile" "plainfile"
 ```
+
+Combining the three methods
+
+```ps1
+ .\coder.ps1 encode .\quick.txt .\encode.txt
+ .\coder.ps1 rot18 .\encode.txt .\rotated.txt
+ .\coder.ps1 xor .\rotated.txt .\xord.txt
+---
+ .\coder.ps1 xor .\xord.txt .\mirror-rotated.txt
+ .\coder.ps1 rot18 .\mirror-rotated.txt .\mirror-encoded.txt
+ .\coder.ps1 decode .\mirror-encoded.txt .\fox.txt
+```
