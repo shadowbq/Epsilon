@@ -1,5 +1,6 @@
 param (
     [Parameter(Mandatory=$true)]
+    [ValidateSet('encode','decode','xor','rot18')][string]
     [string] $method, #method
     [Parameter(Mandatory=$true)]
     [string] $infile, #Infile file
@@ -12,30 +13,25 @@ $enc = [System.Text.Encoding]::UTF8
 if ($method -eq "encode") {
 	$infile_contents =  Get-Content $infile -Encoding Byte -ReadCount 0
 	$outfile_contents = [System.Convert]::ToBase64String($infile_contents)
-	Set-Content -Path $outfile -Value $outfile_contents
+	Set-Content -NoNewline -Path $outfile -Value $outfile_contents
 } 
-
-if ($method -eq "decode"){
+ElseIf ($method -eq "decode"){
 	$infile_b64contents = Get-Content $infile -ReadCount 0 -Encoding UTF8
 	$outfile_contents = [System.Convert]::FromBase64String($infile_b64contents)
-	Set-Content -Path $outfile -Value $outfile_contents -Encoding Byte
+	Set-Content -NoNewline  -Path $outfile -Value $outfile_contents -Encoding Byte
 }
-
-if ($method -eq "xor"){
-	$xor_operand = "$([char]0x0f)"
-	#$infile_contents =  Get-Content $infile -Encoding Byte -ReadCount 0
-	$infile_contents = [System.IO.File]::ReadAllBytes("$infile") 
+ElseIf ($method -eq "xor"){
+	$xor_operand = [char]0x0f
+	$infile_contents =  Get-Content $infile -Encoding Byte -ReadCount 0
 	$length = $infile_contents.Count
 	$xord_byte_array = New-Object Byte[] $length
 	for($i=0; $i -lt $length ; $i++)
 	{
 	    $xord_byte_array[$i] = $infile_contents[$i] -bxor $xor_operand
 	}
-	# Write the XORd bytes to the output file
-	[System.IO.File]::WriteAllBytes("$outfile", $xord_byte_array)
+    Set-Content -NoNewline -Path $outfile -Value $xord_byte_array -Encoding Byte
 }
-
-if ($method -eq "rot18") {
+ElseIf ($method -eq "rot18") {
 	$n = 13
 	$m = 5
 	$infile_b64contents = Get-Content $infile -ReadCount 0 -Encoding UTF8
@@ -64,5 +60,5 @@ if ($method -eq "rot18") {
 		}        
 	}
 	$outfile_contents = $string
-	Set-Content -Path $outfile -Value $outfile_contents
+	Set-Content -NoNewline -Path $outfile -Value $outfile_contents
 }
