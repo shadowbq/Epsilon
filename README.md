@@ -24,6 +24,8 @@ coder "rot18" "plaintextfile" "rotfile"
 coder "rot18" "rotfile" "plaintextfile"
 ```
 
+* https://en.wikipedia.org/wiki/ROT13
+
 ### XOR
 
 Boolean logic operation that is widely used in cryptography as well as in generating parity bits for error checking and fault tolerance. XOR compares two input bits and generates one output bit. This example uses a hardcode single byte key. If the bits are the same, the result is 0. If the bits are different, the result is 1.
@@ -41,7 +43,7 @@ cipher = 0x35 (53)
 binary: 0011 0101
 ```
 
-https://en.wikipedia.org/wiki/Bitwise_operation#XOR_2
+* https://en.wikipedia.org/wiki/Bitwise_operation#XOR_2
 
 Combining the two methods to rot18 a base64 binary for transmission.
 
