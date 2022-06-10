@@ -1,9 +1,11 @@
 # Epsilon
 NERF'd - Do no harm.
 
+## Not secure by any means
+
 `coder.ps1`
 
-## Not secure by any means
+## Base64
 
 Base64 any file including binary files
 
@@ -13,7 +15,7 @@ coder "decode" "encodedfile" "plainfile"
 ```
 * https://en.wikipedia.org/wiki/Base64
 
-### rot18
+## ROT18
 
 ROT13 is a shift cipher, that’s a simple kind of encryption where the ciphertext is created by taking the plain text message and shifting (moving forward in the alphabet) by a certain number of letters. The name is a shorthand version of ‘rotation 13’. It’s also a type of substitution cipher, because one letter is substituted for another.
 
@@ -26,7 +28,7 @@ coder "rot18" "rotfile" "plaintextfile"
 
 * https://en.wikipedia.org/wiki/ROT13
 
-### XOR
+## XOR
 
 Boolean logic operation that is widely used in cryptography as well as in generating parity bits for error checking and fault tolerance. XOR compares two input bits and generates one output bit. This example uses a hardcode single byte key. If the bits are the same, the result is 0. If the bits are different, the result is 1.
 
@@ -45,6 +47,8 @@ binary: 0011 0101
 
 * https://en.wikipedia.org/wiki/Bitwise_operation#XOR_2
 
+## Combining 
+
 Combining the two methods to rot18 a base64 binary for transmission.
 
 Note: In this example `rot18` will only rotate 62 different values, not swapping `/` (111111) or the ending `=` (padding) base64 encoding.
@@ -57,7 +61,7 @@ coder "rot18" "rotated" "encodedfile"
 coder "decode" "encodedfile" "plainfile"
 ```
 
-Combining the three methods
+Combining the three methods.
 
 ```ps1
  .\coder.ps1 encode .\quick.txt .\encode.txt
