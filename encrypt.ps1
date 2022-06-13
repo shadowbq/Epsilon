@@ -10,7 +10,7 @@ Param
 	[Parameter(Mandatory = $true)]
 	[String] $infile, #Infile file
 	[Parameter(Mandatory=$true)]
-  [String] $outfile #Output File
+        [String] $outfile #Output File
 )
 
 $shaManaged = New-Object System.Security.Cryptography.SHA256Managed
