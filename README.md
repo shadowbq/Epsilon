@@ -73,3 +73,12 @@ Combining the three methods.
  .\coder.ps1 rot18 .\mirror-rotated.txt .\mirror-encoded.txt
  .\coder.ps1 decode .\mirror-encoded.txt .\fox.txt
 ```
+
+## AES Encryption of Files 
+
+Works with bytes, so `.pe32` is fine
+
+```ps1
+encrypt.ps1 encrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\plain.txt .\cipher.aes
+encrypt.ps1 decrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\cipher.aes .\plain.txt
+```
