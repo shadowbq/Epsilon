@@ -1,6 +1,8 @@
 # Epsilon
 NERF'd - Do no harm.
 
+> Don’t write your own solution. Cryptography is an extremely complex topic requiring mastery of mathematics and computer science. Use known good solutions from reputable parties.
+
 ## Not secure by any means
 
 `coder.ps1`
