@@ -92,12 +92,34 @@ I use the term `mirror` to mean it matches exactly the other file (`xord.txt == 
 
 ![Diagram of AES](media/diagram%20of%20aes-cbc.png)
 
+> Implemented with aes256 + random IV + CBC + PKSC7 
+
 Works with bytes, so `.pe32` is fine
 
 ```ps1
 aes.ps1 encrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\plain.txt .\cipher.aes
 aes.ps1 decrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\cipher.aes .\plain.txt
 ```
+
+### Block Cipher Mode 
+
+Mode of operations, like `CBC`, are defined to encrypt more data than the blocksize of the symmetric blockcipher.
+
+ In CBC mode, each block of plaintext is XORed with the previous ciphertext block before being encrypted. This way, each ciphertext block depends on all plaintext blocks processed up to that point. To make each message unique, an initialization vector must be used in the first block.
+
+Modern block ciphers like the Advanced Encryption Algorithm (AES) have larger block sizes than DES and Blowfish. If using AES with a 128-bit block, pad to the next multiple of 16. Note, that it is the block size that matters, not the size of the key.
+
+* https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
+
+### Padding Modes
+
+|PKCS7	| The PKCS #7 padding string consists of a sequence of bytes, each of which is equal to the total number of padding bytes added.|
+|--|--|
+|Data | 	FF FF FF FF FF FF FF FF FF FF|
+|PKCS7 padding |	FF FF FF FF FF FF FF FF FF 06 06 06 06 06 06 06|
+
+* https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.paddingmode?view=net-6.0
+* https://en.wikipedia.org/wiki/Padding_(cryptography)
 
 ## Reference
 
