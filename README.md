@@ -86,6 +86,8 @@ I use the term `mirror` to mean it matches exactly the other file (`xord.txt == 
 
 ## AES Encryption of Files 
 
+![Diagram of AES](media/diagram%20of%20aes-cbc.png)
+
 Works with bytes, so `.pe32` is fine
 
 ```ps1
