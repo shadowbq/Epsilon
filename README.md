@@ -7,6 +7,27 @@ NERF'd - Do no harm.
 
 `coder.ps1`
 
+## XOR
+
+Boolean logic operation that is widely used in cryptography as well as in generating parity bits for error checking and fault tolerance. XOR compares two input bits and generates one output bit. This example uses a hardcode single byte key. If the bits are the same, the result is 0. If the bits are different, the result is 1.
+
+Note: In this example the xor_key is hardcoded at `0x0f`
+
+```
+plaintext = 0x3A (58)
+binary: 0011 1010
+
+xor_key = 0x0f (15)
+binary: 0000 1111
+
+cipher = 0x35 (53)
+binary: 0011 0101
+```
+
+* https://en.wikipedia.org/wiki/Bitwise_operation#XOR_2
+* https://en.wikipedia.org/wiki/XOR_cipher
+
+
 ## Base64
 
 Base64 any file including binary files
@@ -30,25 +51,6 @@ coder "rot18" "rotfile" "plaintextfile"
 
 * https://en.wikipedia.org/wiki/ROT13
 
-## XOR
-
-Boolean logic operation that is widely used in cryptography as well as in generating parity bits for error checking and fault tolerance. XOR compares two input bits and generates one output bit. This example uses a hardcode single byte key. If the bits are the same, the result is 0. If the bits are different, the result is 1.
-
-Note: In this example the xor_key is hardcoded at `0x0f`
-
-```
-plaintext = 0x3A (58)
-binary: 0011 1010
-
-xor_key = 0x0f (15)
-binary: 0000 1111
-
-cipher = 0x35 (53)
-binary: 0011 0101
-```
-
-* https://en.wikipedia.org/wiki/Bitwise_operation#XOR_2
-* https://en.wikipedia.org/wiki/XOR_cipher
 
 ## Combining 
 
@@ -66,14 +68,20 @@ coder "decode" "encodedfile" "plainfile"
 
 Combining the three methods.
 
+![Diagram of Process](media/Diagram%20of%20coder.png)
+
+I use the term `mirror` to mean it matches exactly the other file (`xord.txt == mirror-xord.txt`)
+
 ```ps1
- .\coder.ps1 encode .\quick.txt .\encode.txt
+ .\coder.ps1 xor .\quickbrownfox.txt .\xord.txt
+ .\coder.ps1 encode .\xord.txt .\encode.txt
  .\coder.ps1 rot18 .\encode.txt .\rotated.txt
- .\coder.ps1 xor .\rotated.txt .\xord.txt
+ 
 ---
- .\coder.ps1 xor .\xord.txt .\mirror-rotated.txt
- .\coder.ps1 rot18 .\mirror-rotated.txt .\mirror-encoded.txt
- .\coder.ps1 decode .\mirror-encoded.txt .\fox.txt
+
+ .\coder.ps1 rot18 .\rotated.txt .\mirror-encoded.txt
+ .\coder.ps1 decode .\mirror-encoded.txt .\mirror-xord.txt
+ .\coder.ps1 xor .\mirror-xord.txt .\mirror-quickbrownfox.txt
 ```
 
 ## AES Encryption of Files 
