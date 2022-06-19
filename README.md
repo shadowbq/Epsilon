@@ -1,6 +1,10 @@
 # Epsilon
 NERF'd - Do no harm.
 
+Powershell examples of using common substitution, transformation, and encoding of data and files. 
+
+To include: `bitwise-xor`, `base64`, `rot18`, and `aes` (aes-cbc-pkcs7).
+
 > Don’t write your own solution. Cryptography is an extremely complex topic requiring mastery of mathematics and computer science. Use known good solutions from reputable parties.
 
 ## Not secure by any means
@@ -94,3 +98,7 @@ Works with bytes, so `.pe32` is fine
 aes.ps1 encrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\plain.txt .\cipher.aes
 aes.ps1 decrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\cipher.aes .\plain.txt
 ```
+
+## Reference
+
+* [Cryptii.com](https://cryptii.com/) - Great visual UI in local javascript to validate processes.
