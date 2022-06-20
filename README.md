@@ -101,6 +101,8 @@ aes.ps1 encrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\plain.txt .\ciphe
 aes.ps1 decrypt K7Y6VTFrz3nuglS6iFLm4PRp6Zh/JJKghMiLzyRl7AA= .\cipher.aes .\plain.txt
 ```
 
+AES is a block cipher with a block length of 128 bits. AES allows for three different key lengths: 128, 192, or 256 bits. The above example uses a base64 encoded 256 key length.
+
 ### Block Cipher Mode 
 
 Mode of operations, like `CBC`, are defined to encrypt more data than the blocksize of the symmetric blockcipher.
@@ -120,6 +122,14 @@ Modern block ciphers like the Advanced Encryption Algorithm (AES) have larger bl
 
 * https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.paddingmode?view=net-6.0
 * https://en.wikipedia.org/wiki/Padding_(cryptography)
+
+Note: [Cryptii.com](https://github.com/cryptii/cryptii/issues/95#issuecomment-794358273) uses CMS padding not PKCS7 in it's CBC implementation. 
+
+### Alternative GCM 
+
+When using symmetric encryption, you should be favoring authenticated encryption, such as AES-GCM (Galois/Counter Mode), rather than unauthenticated encryption, such as AES-CBC (Cipher Block Chaining). AES-CBC is not authenticated encryption, so it is vulnerable to the various chosen-ciphertext attacks. As of v1.3, TLS no longer supports AES-CBC. GCM includes an in-built integrity check.
+
+If you are using .NET Core 3 onwards, the AES-GCM implementation found in `System.Security.Cryptography`. On Windows and Linux, this API will call into the OS implementations of AES, while macOS will require you to have OpenSSL installed. A future example will use AES-256-GCM.
 
 ## Reference
 
